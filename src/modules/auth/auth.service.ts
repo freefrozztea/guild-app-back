@@ -9,9 +9,9 @@ export class AuthService {
         const { data, error } = await supabase
             .from("users")
             .insert({
-                email,
+                email: email,
                 password: hashed,
-                name
+                name: name
             })
             .select()
             .single();
@@ -36,7 +36,7 @@ export class AuthService {
         const token = jwt.sign(
             { id: data.id, email: data.email },
             process.env.JWT_SECRET!,
-            { expiresIn: "1d" }
+            { expiresIn: "1h" }
         );
 
         return {
